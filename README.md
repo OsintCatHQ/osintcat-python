@@ -4,8 +4,11 @@ The official SDK for the [OsintCat API](https://docs.osintcat.net). Typed reques
 synchronous and an asynchronous client. Python 3.10+.
 
 ```sh
-pip install osintcat
+pip install "git+https://github.com/OsintCatHQ/osintcat-python@main"
 ```
+
+The SDK is not on PyPI yet. Do not `pip install osintcat` for now: that name still holds an old,
+unrelated client that does not work with the API.
 
 ## API key
 
