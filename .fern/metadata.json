@@ -14,7 +14,7 @@
     "default_max_retries": 0,
     "timeout": 60
   },
-  "originGitCommit": "68eeafea01d0aae1b63214b62248e790a0e9242b",
+  "originGitCommit": "c2ebc8fea9a68d44c079b921446aa8a66a98e59e",
   "originGitCommitIsDirty": true,
   "invokedBy": "manual",
   "requestedVersion": "1.0.0"

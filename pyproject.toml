@@ -10,7 +10,7 @@ readme = "README.md"
 authors = ["OsintCat <support@osintcat.net>"]
 license = "MIT"
 homepage = "https://docs.osintcat.net"
-repository = "https://github.com/OsintCatHQ/OsintCat.py"
+repository = "https://github.com/OsintCatHQ/osintcat-python"
 documentation = "https://docs.osintcat.net"
 keywords = ["osintcat", "osint", "api", "sdk"]
 
