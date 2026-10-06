@@ -21,6 +21,7 @@ if typing.TYPE_CHECKING:
     from .github.client import AsyncGithubClient, GithubClient
     from .instagram.client import AsyncInstagramClient, InstagramClient
     from .ip.client import AsyncIpClient, IpClient
+    from .machine_viewer.client import AsyncMachineViewerClient, MachineViewerClient
     from .minecraft.client import AsyncMinecraftClient, MinecraftClient
     from .phone.client import AsyncPhoneClient, PhoneClient
     from .reddit.client import AsyncRedditClient, RedditClient
@@ -138,6 +139,7 @@ class OsintCat:
         self._instagram: typing.Optional[InstagramClient] = None
         self._vin: typing.Optional[VinClient] = None
         self._chile: typing.Optional[ChileClient] = None
+        self._machine_viewer: typing.Optional[MachineViewerClient] = None
 
     @property
     def account(self):
@@ -283,6 +285,14 @@ class OsintCat:
             self._chile = ChileClient(client_wrapper=self._client_wrapper)
         return self._chile
 
+    @property
+    def machine_viewer(self):
+        if self._machine_viewer is None:
+            from .machine_viewer.client import MachineViewerClient  # noqa: E402
+
+            self._machine_viewer = MachineViewerClient(client_wrapper=self._client_wrapper)
+        return self._machine_viewer
+
 
 def _make_default_async_client(
     timeout: typing.Optional[float],
@@ -406,6 +416,7 @@ class AsyncOsintCat:
         self._instagram: typing.Optional[AsyncInstagramClient] = None
         self._vin: typing.Optional[AsyncVinClient] = None
         self._chile: typing.Optional[AsyncChileClient] = None
+        self._machine_viewer: typing.Optional[AsyncMachineViewerClient] = None
 
     @property
     def account(self):
@@ -550,6 +561,14 @@ class AsyncOsintCat:
 
             self._chile = AsyncChileClient(client_wrapper=self._client_wrapper)
         return self._chile
+
+    @property
+    def machine_viewer(self):
+        if self._machine_viewer is None:
+            from .machine_viewer.client import AsyncMachineViewerClient  # noqa: E402
+
+            self._machine_viewer = AsyncMachineViewerClient(client_wrapper=self._client_wrapper)
+        return self._machine_viewer
 
 
 def _get_base_url(*, base_url: typing.Optional[str] = None, environment: OsintCatEnvironment) -> str:

@@ -20,6 +20,14 @@ if typing.TYPE_CHECKING:
     from .github_response import GithubResponse
     from .instagram_resolver_response import InstagramResolverResponse
     from .ip_response import IpResponse
+    from .machine import Machine
+    from .machine_file import MachineFile
+    from .machine_file_info import MachineFileInfo
+    from .machine_file_response import MachineFileResponse
+    from .machine_files_response import MachineFilesResponse
+    from .machine_info_response import MachineInfoResponse
+    from .machine_search_response import MachineSearchResponse
+    from .machine_viewer_stats import MachineViewerStats
     from .minecraft_osint_response import MinecraftOsintResponse
     from .minecraft_profile_extra_data import MinecraftProfileExtraData
     from .minecraft_profile_response import MinecraftProfileResponse
@@ -61,6 +69,14 @@ _dynamic_imports: typing.Dict[str, str] = {
     "GithubResponse": ".github_response",
     "InstagramResolverResponse": ".instagram_resolver_response",
     "IpResponse": ".ip_response",
+    "Machine": ".machine",
+    "MachineFile": ".machine_file",
+    "MachineFileInfo": ".machine_file_info",
+    "MachineFileResponse": ".machine_file_response",
+    "MachineFilesResponse": ".machine_files_response",
+    "MachineInfoResponse": ".machine_info_response",
+    "MachineSearchResponse": ".machine_search_response",
+    "MachineViewerStats": ".machine_viewer_stats",
     "MinecraftOsintResponse": ".minecraft_osint_response",
     "MinecraftProfileExtraData": ".minecraft_profile_extra_data",
     "MinecraftProfileResponse": ".minecraft_profile_response",
@@ -126,6 +142,14 @@ __all__ = [
     "GithubResponse",
     "InstagramResolverResponse",
     "IpResponse",
+    "Machine",
+    "MachineFile",
+    "MachineFileInfo",
+    "MachineFileResponse",
+    "MachineFilesResponse",
+    "MachineInfoResponse",
+    "MachineSearchResponse",
+    "MachineViewerStats",
     "MinecraftOsintResponse",
     "MinecraftProfileExtraData",
     "MinecraftProfileResponse",
