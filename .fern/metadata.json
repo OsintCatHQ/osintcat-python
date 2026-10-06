@@ -1,0 +1,20 @@
+{
+  "cliVersion": "5.112.0",
+  "generatorName": "fernapi/fern-python-sdk",
+  "generatorVersion": "5.18.1",
+  "generatorConfig": {
+    "package_name": "osintcat",
+    "client": {
+      "class_name": "OsintCat"
+    },
+    "pydantic_config": {
+      "extra_fields": "allow",
+      "skip_validation": true
+    },
+    "default_max_retries": 0,
+    "timeout": 60
+  },
+  "originGitCommitIsDirty": true,
+  "invokedBy": "manual",
+  "requestedVersion": "1.0.0"
+}
