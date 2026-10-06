@@ -3,9 +3,12 @@
 import typing
 
 import pydantic
+import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
+from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .email_osint_results import EmailOsintResults
+from .usage_meta import UsageMeta
 
 
 class EmailOsintResponse(UncheckedBaseModel):
@@ -14,6 +17,9 @@ class EmailOsintResponse(UncheckedBaseModel):
     """
 
     results: typing.Optional[EmailOsintResults] = None
+    meta: typing_extensions.Annotated[
+        typing.Optional[UsageMeta], FieldMetadata(alias="_meta"), pydantic.Field(alias="_meta")
+    ] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
