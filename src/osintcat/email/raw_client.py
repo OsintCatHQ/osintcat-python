@@ -9,8 +9,8 @@ from ..core.http_response import AsyncHttpResponse, HttpResponse
 from ..core.parse_error import ParsingError
 from ..core.request_options import RequestOptions
 from ..core.unchecked_base_model import construct_type
-from ..errors.bad_gateway_error import BadGatewayError
 from ..errors.bad_request_error import BadRequestError
+from ..errors.failed_dependency_error import FailedDependencyError
 from ..errors.forbidden_error import ForbiddenError
 from ..errors.payment_required_error import PaymentRequiredError
 from ..errors.too_many_requests_error import TooManyRequestsError
@@ -38,7 +38,7 @@ class RawEmailClient:
         - 400 `USER_AGENT_IDENTITY_REQUIRED`: No purpose given.
         - 401 `API key required`: No `X-API-KEY` header.
         - 402 `INSUFFICIENT_BALANCE`: Your balance does not cover the lookup.
-        - 502 `Provider Error`: The lookup could not be completed. Not charged.
+        - 424 `Provider Error`: The lookup could not be completed. Not charged.
 
         Docs: https://docs.osintcat.net/api-reference/endpoint/email-osint
 
@@ -121,8 +121,8 @@ class RawEmailClient:
                         ),
                     ),
                 )
-            if _response.status_code == 429:
-                raise TooManyRequestsError(
+            if _response.status_code == 424:
+                raise FailedDependencyError(
                     headers=dict(_response.headers),
                     body=typing.cast(
                         Error,
@@ -132,8 +132,8 @@ class RawEmailClient:
                         ),
                     ),
                 )
-            if _response.status_code == 502:
-                raise BadGatewayError(
+            if _response.status_code == 429:
+                raise TooManyRequestsError(
                     headers=dict(_response.headers),
                     body=typing.cast(
                         Error,
@@ -171,7 +171,7 @@ class AsyncRawEmailClient:
         - 400 `USER_AGENT_IDENTITY_REQUIRED`: No purpose given.
         - 401 `API key required`: No `X-API-KEY` header.
         - 402 `INSUFFICIENT_BALANCE`: Your balance does not cover the lookup.
-        - 502 `Provider Error`: The lookup could not be completed. Not charged.
+        - 424 `Provider Error`: The lookup could not be completed. Not charged.
 
         Docs: https://docs.osintcat.net/api-reference/endpoint/email-osint
 
@@ -254,8 +254,8 @@ class AsyncRawEmailClient:
                         ),
                     ),
                 )
-            if _response.status_code == 429:
-                raise TooManyRequestsError(
+            if _response.status_code == 424:
+                raise FailedDependencyError(
                     headers=dict(_response.headers),
                     body=typing.cast(
                         Error,
@@ -265,8 +265,8 @@ class AsyncRawEmailClient:
                         ),
                     ),
                 )
-            if _response.status_code == 502:
-                raise BadGatewayError(
+            if _response.status_code == 429:
+                raise TooManyRequestsError(
                     headers=dict(_response.headers),
                     body=typing.cast(
                         Error,

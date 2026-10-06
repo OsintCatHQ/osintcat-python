@@ -9,8 +9,8 @@ from ..core.http_response import AsyncHttpResponse, HttpResponse
 from ..core.parse_error import ParsingError
 from ..core.request_options import RequestOptions
 from ..core.unchecked_base_model import construct_type
-from ..errors.bad_gateway_error import BadGatewayError
 from ..errors.bad_request_error import BadRequestError
+from ..errors.failed_dependency_error import FailedDependencyError
 from ..errors.forbidden_error import ForbiddenError
 from ..errors.too_many_requests_error import TooManyRequestsError
 from ..errors.unauthorized_error import UnauthorizedError
@@ -35,7 +35,7 @@ class RawInstagramClient:
         Errors:
         - 400 `Provide a valid Instagram URL via ?link=...`: No link, not an Instagram link, or the link expired or points to a private post. Not charged.
         - 422 `profile_link`: A profile link: only post and reel share links can be resolved. Not charged.
-        - 502 `(message)`: The link could not be resolved right now. Not charged.
+        - 424 `(message)`: The link could not be resolved right now. Not charged.
 
         Docs: https://docs.osintcat.net/api-reference/endpoint/instagram-resolver
 
@@ -114,8 +114,8 @@ class RawInstagramClient:
                         ),
                     ),
                 )
-            if _response.status_code == 429:
-                raise TooManyRequestsError(
+            if _response.status_code == 424:
+                raise FailedDependencyError(
                     headers=dict(_response.headers),
                     body=typing.cast(
                         Error,
@@ -125,8 +125,8 @@ class RawInstagramClient:
                         ),
                     ),
                 )
-            if _response.status_code == 502:
-                raise BadGatewayError(
+            if _response.status_code == 429:
+                raise TooManyRequestsError(
                     headers=dict(_response.headers),
                     body=typing.cast(
                         Error,
@@ -161,7 +161,7 @@ class AsyncRawInstagramClient:
         Errors:
         - 400 `Provide a valid Instagram URL via ?link=...`: No link, not an Instagram link, or the link expired or points to a private post. Not charged.
         - 422 `profile_link`: A profile link: only post and reel share links can be resolved. Not charged.
-        - 502 `(message)`: The link could not be resolved right now. Not charged.
+        - 424 `(message)`: The link could not be resolved right now. Not charged.
 
         Docs: https://docs.osintcat.net/api-reference/endpoint/instagram-resolver
 
@@ -240,8 +240,8 @@ class AsyncRawInstagramClient:
                         ),
                     ),
                 )
-            if _response.status_code == 429:
-                raise TooManyRequestsError(
+            if _response.status_code == 424:
+                raise FailedDependencyError(
                     headers=dict(_response.headers),
                     body=typing.cast(
                         Error,
@@ -251,8 +251,8 @@ class AsyncRawInstagramClient:
                         ),
                     ),
                 )
-            if _response.status_code == 502:
-                raise BadGatewayError(
+            if _response.status_code == 429:
+                raise TooManyRequestsError(
                     headers=dict(_response.headers),
                     body=typing.cast(
                         Error,

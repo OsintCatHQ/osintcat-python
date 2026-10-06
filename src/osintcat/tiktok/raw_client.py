@@ -9,8 +9,8 @@ from ..core.http_response import AsyncHttpResponse, HttpResponse
 from ..core.parse_error import ParsingError
 from ..core.request_options import RequestOptions
 from ..core.unchecked_base_model import construct_type
-from ..errors.bad_gateway_error import BadGatewayError
 from ..errors.bad_request_error import BadRequestError
+from ..errors.failed_dependency_error import FailedDependencyError
 from ..errors.forbidden_error import ForbiddenError
 from ..errors.not_found_error import NotFoundError
 from ..errors.too_many_requests_error import TooManyRequestsError
@@ -35,7 +35,7 @@ class RawTiktokClient:
         Errors:
         - 400 `Provide a valid TikTok short link via ?link=...`: No link, or not a TikTok link.
         - 404 `No user found for this link`: The link carries no sharer.
-        - 502 `Could not resolve link`: The link could not be resolved right now.
+        - 424 `Could not resolve link`: The link could not be resolved right now.
 
         Docs: https://docs.osintcat.net/api-reference/endpoint/tiktok-resolver
 
@@ -114,8 +114,8 @@ class RawTiktokClient:
                         ),
                     ),
                 )
-            if _response.status_code == 429:
-                raise TooManyRequestsError(
+            if _response.status_code == 424:
+                raise FailedDependencyError(
                     headers=dict(_response.headers),
                     body=typing.cast(
                         Error,
@@ -125,8 +125,8 @@ class RawTiktokClient:
                         ),
                     ),
                 )
-            if _response.status_code == 502:
-                raise BadGatewayError(
+            if _response.status_code == 429:
+                raise TooManyRequestsError(
                     headers=dict(_response.headers),
                     body=typing.cast(
                         Error,
@@ -161,7 +161,7 @@ class AsyncRawTiktokClient:
         Errors:
         - 400 `Provide a valid TikTok short link via ?link=...`: No link, or not a TikTok link.
         - 404 `No user found for this link`: The link carries no sharer.
-        - 502 `Could not resolve link`: The link could not be resolved right now.
+        - 424 `Could not resolve link`: The link could not be resolved right now.
 
         Docs: https://docs.osintcat.net/api-reference/endpoint/tiktok-resolver
 
@@ -240,8 +240,8 @@ class AsyncRawTiktokClient:
                         ),
                     ),
                 )
-            if _response.status_code == 429:
-                raise TooManyRequestsError(
+            if _response.status_code == 424:
+                raise FailedDependencyError(
                     headers=dict(_response.headers),
                     body=typing.cast(
                         Error,
@@ -251,8 +251,8 @@ class AsyncRawTiktokClient:
                         ),
                     ),
                 )
-            if _response.status_code == 502:
-                raise BadGatewayError(
+            if _response.status_code == 429:
+                raise TooManyRequestsError(
                     headers=dict(_response.headers),
                     body=typing.cast(
                         Error,

@@ -49,10 +49,9 @@ if typing.TYPE_CHECKING:
         XboxResponse,
     )
     from .errors import (
-        BadGatewayError,
         BadRequestError,
+        FailedDependencyError,
         ForbiddenError,
-        GatewayTimeoutError,
         NotFoundError,
         PaymentRequiredError,
         TooManyRequestsError,
@@ -88,7 +87,6 @@ if typing.TYPE_CHECKING:
     from .vin import QueryVinRequestType, QueryVinRequestUnits
 _dynamic_imports: typing.Dict[str, str] = {
     "AsyncOsintCat": ".client",
-    "BadGatewayError": ".errors",
     "BadRequestError": ".errors",
     "BreachResponse": ".types",
     "ChessResponse": ".types",
@@ -103,8 +101,8 @@ _dynamic_imports: typing.Dict[str, str] = {
     "EmailOsintResponse": ".types",
     "EmailOsintResults": ".types",
     "Error": ".types",
+    "FailedDependencyError": ".errors",
     "ForbiddenError": ".errors",
-    "GatewayTimeoutError": ".errors",
     "GithubExtraData": ".types",
     "GithubResponse": ".types",
     "InstagramResolverResponse": ".types",
@@ -191,7 +189,6 @@ def __dir__():
 
 __all__ = [
     "AsyncOsintCat",
-    "BadGatewayError",
     "BadRequestError",
     "BreachResponse",
     "ChessResponse",
@@ -206,8 +203,8 @@ __all__ = [
     "EmailOsintResponse",
     "EmailOsintResults",
     "Error",
+    "FailedDependencyError",
     "ForbiddenError",
-    "GatewayTimeoutError",
     "GithubExtraData",
     "GithubResponse",
     "InstagramResolverResponse",

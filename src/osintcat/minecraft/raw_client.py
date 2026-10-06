@@ -9,8 +9,8 @@ from ..core.http_response import AsyncHttpResponse, HttpResponse
 from ..core.parse_error import ParsingError
 from ..core.request_options import RequestOptions
 from ..core.unchecked_base_model import construct_type
-from ..errors.bad_gateway_error import BadGatewayError
 from ..errors.bad_request_error import BadRequestError
+from ..errors.failed_dependency_error import FailedDependencyError
 from ..errors.forbidden_error import ForbiddenError
 from ..errors.too_many_requests_error import TooManyRequestsError
 from ..errors.unauthorized_error import UnauthorizedError
@@ -98,6 +98,17 @@ class RawMinecraftClient:
                         ),
                     ),
                 )
+            if _response.status_code == 424:
+                raise FailedDependencyError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        Error,
+                        construct_type(
+                            type_=Error,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
             if _response.status_code == 429:
                 raise TooManyRequestsError(
                     headers=dict(_response.headers),
@@ -132,7 +143,7 @@ class RawMinecraftClient:
 
         Errors:
         - 400 `invalid query type`: `type` is missing or not one of the allowed values; `allowed_types` lists them.
-        - 502 `Upstream returned an empty response`: The search could not be completed; the response carries an `error_id`.
+        - 424 `Upstream returned an empty response`: The search could not be completed; the response carries an `error_id`.
 
         Docs: https://docs.osintcat.net/api-reference/endpoint/minecraft-osint
 
@@ -206,8 +217,8 @@ class RawMinecraftClient:
                         ),
                     ),
                 )
-            if _response.status_code == 429:
-                raise TooManyRequestsError(
+            if _response.status_code == 424:
+                raise FailedDependencyError(
                     headers=dict(_response.headers),
                     body=typing.cast(
                         Error,
@@ -217,8 +228,8 @@ class RawMinecraftClient:
                         ),
                     ),
                 )
-            if _response.status_code == 502:
-                raise BadGatewayError(
+            if _response.status_code == 429:
+                raise TooManyRequestsError(
                     headers=dict(_response.headers),
                     body=typing.cast(
                         Error,
@@ -305,6 +316,17 @@ class RawMinecraftClient:
                 )
             if _response.status_code == 403:
                 raise ForbiddenError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        Error,
+                        construct_type(
+                            type_=Error,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 424:
+                raise FailedDependencyError(
                     headers=dict(_response.headers),
                     body=typing.cast(
                         Error,
@@ -410,6 +432,17 @@ class AsyncRawMinecraftClient:
                         ),
                     ),
                 )
+            if _response.status_code == 424:
+                raise FailedDependencyError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        Error,
+                        construct_type(
+                            type_=Error,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
             if _response.status_code == 429:
                 raise TooManyRequestsError(
                     headers=dict(_response.headers),
@@ -444,7 +477,7 @@ class AsyncRawMinecraftClient:
 
         Errors:
         - 400 `invalid query type`: `type` is missing or not one of the allowed values; `allowed_types` lists them.
-        - 502 `Upstream returned an empty response`: The search could not be completed; the response carries an `error_id`.
+        - 424 `Upstream returned an empty response`: The search could not be completed; the response carries an `error_id`.
 
         Docs: https://docs.osintcat.net/api-reference/endpoint/minecraft-osint
 
@@ -518,8 +551,8 @@ class AsyncRawMinecraftClient:
                         ),
                     ),
                 )
-            if _response.status_code == 429:
-                raise TooManyRequestsError(
+            if _response.status_code == 424:
+                raise FailedDependencyError(
                     headers=dict(_response.headers),
                     body=typing.cast(
                         Error,
@@ -529,8 +562,8 @@ class AsyncRawMinecraftClient:
                         ),
                     ),
                 )
-            if _response.status_code == 502:
-                raise BadGatewayError(
+            if _response.status_code == 429:
+                raise TooManyRequestsError(
                     headers=dict(_response.headers),
                     body=typing.cast(
                         Error,
@@ -617,6 +650,17 @@ class AsyncRawMinecraftClient:
                 )
             if _response.status_code == 403:
                 raise ForbiddenError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        Error,
+                        construct_type(
+                            type_=Error,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 424:
+                raise FailedDependencyError(
                     headers=dict(_response.headers),
                     body=typing.cast(
                         Error,

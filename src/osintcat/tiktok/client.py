@@ -34,7 +34,7 @@ class TiktokClient:
         Errors:
         - 400 `Provide a valid TikTok short link via ?link=...`: No link, or not a TikTok link.
         - 404 `No user found for this link`: The link carries no sharer.
-        - 502 `Could not resolve link`: The link could not be resolved right now.
+        - 424 `Could not resolve link`: The link could not be resolved right now.
 
         Docs: https://docs.osintcat.net/api-reference/endpoint/tiktok-resolver
 
@@ -92,7 +92,7 @@ class AsyncTiktokClient:
         Errors:
         - 400 `Provide a valid TikTok short link via ?link=...`: No link, or not a TikTok link.
         - 404 `No user found for this link`: The link carries no sharer.
-        - 502 `Could not resolve link`: The link could not be resolved right now.
+        - 424 `Could not resolve link`: The link could not be resolved right now.
 
         Docs: https://docs.osintcat.net/api-reference/endpoint/tiktok-resolver
 

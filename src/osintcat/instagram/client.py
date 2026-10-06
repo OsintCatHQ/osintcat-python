@@ -34,7 +34,7 @@ class InstagramClient:
         Errors:
         - 400 `Provide a valid Instagram URL via ?link=...`: No link, not an Instagram link, or the link expired or points to a private post. Not charged.
         - 422 `profile_link`: A profile link: only post and reel share links can be resolved. Not charged.
-        - 502 `(message)`: The link could not be resolved right now. Not charged.
+        - 424 `(message)`: The link could not be resolved right now. Not charged.
 
         Docs: https://docs.osintcat.net/api-reference/endpoint/instagram-resolver
 
@@ -92,7 +92,7 @@ class AsyncInstagramClient:
         Errors:
         - 400 `Provide a valid Instagram URL via ?link=...`: No link, not an Instagram link, or the link expired or points to a private post. Not charged.
         - 422 `profile_link`: A profile link: only post and reel share links can be resolved. Not charged.
-        - 502 `(message)`: The link could not be resolved right now. Not charged.
+        - 424 `(message)`: The link could not be resolved right now. Not charged.
 
         Docs: https://docs.osintcat.net/api-reference/endpoint/instagram-resolver
 

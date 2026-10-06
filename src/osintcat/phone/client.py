@@ -31,8 +31,8 @@ class PhoneClient:
 
         Errors:
         - 400 `phone_*`: The number cannot be a valid phone number; `code` says why (e.g. `phone_too_short`).
-        - 502 `Upstream provider error`: The lookup could not be completed.
-        - 504 `The request timed out.`: The lookup took too long.
+        - 424 `Upstream provider error`: The lookup could not be completed.
+        - 424 `The request timed out.`: The lookup took too long.
 
         Docs: https://docs.osintcat.net/api-reference/endpoint/phone-osint
 
@@ -89,8 +89,8 @@ class AsyncPhoneClient:
 
         Errors:
         - 400 `phone_*`: The number cannot be a valid phone number; `code` says why (e.g. `phone_too_short`).
-        - 502 `Upstream provider error`: The lookup could not be completed.
-        - 504 `The request timed out.`: The lookup took too long.
+        - 424 `Upstream provider error`: The lookup could not be completed.
+        - 424 `The request timed out.`: The lookup took too long.
 
         Docs: https://docs.osintcat.net/api-reference/endpoint/phone-osint
 

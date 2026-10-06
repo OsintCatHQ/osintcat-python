@@ -9,9 +9,8 @@ from ..core.http_response import AsyncHttpResponse, HttpResponse
 from ..core.parse_error import ParsingError
 from ..core.request_options import RequestOptions
 from ..core.unchecked_base_model import construct_type
-from ..errors.bad_gateway_error import BadGatewayError
+from ..errors.failed_dependency_error import FailedDependencyError
 from ..errors.forbidden_error import ForbiddenError
-from ..errors.gateway_timeout_error import GatewayTimeoutError
 from ..errors.not_found_error import NotFoundError
 from ..errors.too_many_requests_error import TooManyRequestsError
 from ..errors.unauthorized_error import UnauthorizedError
@@ -92,6 +91,17 @@ class RawBreachClient:
                         ),
                     ),
                 )
+            if _response.status_code == 424:
+                raise FailedDependencyError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        Error,
+                        construct_type(
+                            type_=Error,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
             if _response.status_code == 429:
                 raise TooManyRequestsError(
                     headers=dict(_response.headers),
@@ -125,8 +135,8 @@ class RawBreachClient:
         Counts as one lookup against your plan's daily allowance (Max: unlimited). When the allowance is used up, the lookup can continue at a per-lookup price charged to your balance (the module's page in the dashboard shows the price); a lookup that finds nothing is not charged.
 
         Errors:
-        - 502 `Upstream error`: The search backend answered with an error. Not charged.
-        - 504 `timeout error`: The search backend did not answer in time. Not charged.
+        - 424 `Upstream error`: The search backend answered with an error. Not charged.
+        - 424 `timeout error`: The search backend did not answer in time. Not charged.
 
         Docs: https://docs.osintcat.net/api-reference/endpoint/database-search
 
@@ -187,30 +197,19 @@ class RawBreachClient:
                         ),
                     ),
                 )
+            if _response.status_code == 424:
+                raise FailedDependencyError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        Error,
+                        construct_type(
+                            type_=Error,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
             if _response.status_code == 429:
                 raise TooManyRequestsError(
-                    headers=dict(_response.headers),
-                    body=typing.cast(
-                        Error,
-                        construct_type(
-                            type_=Error,  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    ),
-                )
-            if _response.status_code == 502:
-                raise BadGatewayError(
-                    headers=dict(_response.headers),
-                    body=typing.cast(
-                        Error,
-                        construct_type(
-                            type_=Error,  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    ),
-                )
-            if _response.status_code == 504:
-                raise GatewayTimeoutError(
                     headers=dict(_response.headers),
                     body=typing.cast(
                         Error,
@@ -239,7 +238,7 @@ class RawBreachClient:
 
         Errors:
         - 404 `No results found`: Nothing was found for the domain.
-        - 502 `Upstream error`: The search could not be completed; the response carries an `error_id`.
+        - 424 `Upstream error`: The search could not be completed; the response carries an `error_id`.
 
         Docs: https://docs.osintcat.net/api-reference/endpoint/domain
 
@@ -307,8 +306,8 @@ class RawBreachClient:
                         ),
                     ),
                 )
-            if _response.status_code == 429:
-                raise TooManyRequestsError(
+            if _response.status_code == 424:
+                raise FailedDependencyError(
                     headers=dict(_response.headers),
                     body=typing.cast(
                         Error,
@@ -318,8 +317,8 @@ class RawBreachClient:
                         ),
                     ),
                 )
-            if _response.status_code == 502:
-                raise BadGatewayError(
+            if _response.status_code == 429:
+                raise TooManyRequestsError(
                     headers=dict(_response.headers),
                     body=typing.cast(
                         Error,
@@ -408,6 +407,17 @@ class AsyncRawBreachClient:
                         ),
                     ),
                 )
+            if _response.status_code == 424:
+                raise FailedDependencyError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        Error,
+                        construct_type(
+                            type_=Error,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
             if _response.status_code == 429:
                 raise TooManyRequestsError(
                     headers=dict(_response.headers),
@@ -441,8 +451,8 @@ class AsyncRawBreachClient:
         Counts as one lookup against your plan's daily allowance (Max: unlimited). When the allowance is used up, the lookup can continue at a per-lookup price charged to your balance (the module's page in the dashboard shows the price); a lookup that finds nothing is not charged.
 
         Errors:
-        - 502 `Upstream error`: The search backend answered with an error. Not charged.
-        - 504 `timeout error`: The search backend did not answer in time. Not charged.
+        - 424 `Upstream error`: The search backend answered with an error. Not charged.
+        - 424 `timeout error`: The search backend did not answer in time. Not charged.
 
         Docs: https://docs.osintcat.net/api-reference/endpoint/database-search
 
@@ -503,30 +513,19 @@ class AsyncRawBreachClient:
                         ),
                     ),
                 )
+            if _response.status_code == 424:
+                raise FailedDependencyError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        Error,
+                        construct_type(
+                            type_=Error,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
             if _response.status_code == 429:
                 raise TooManyRequestsError(
-                    headers=dict(_response.headers),
-                    body=typing.cast(
-                        Error,
-                        construct_type(
-                            type_=Error,  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    ),
-                )
-            if _response.status_code == 502:
-                raise BadGatewayError(
-                    headers=dict(_response.headers),
-                    body=typing.cast(
-                        Error,
-                        construct_type(
-                            type_=Error,  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    ),
-                )
-            if _response.status_code == 504:
-                raise GatewayTimeoutError(
                     headers=dict(_response.headers),
                     body=typing.cast(
                         Error,
@@ -555,7 +554,7 @@ class AsyncRawBreachClient:
 
         Errors:
         - 404 `No results found`: Nothing was found for the domain.
-        - 502 `Upstream error`: The search could not be completed; the response carries an `error_id`.
+        - 424 `Upstream error`: The search could not be completed; the response carries an `error_id`.
 
         Docs: https://docs.osintcat.net/api-reference/endpoint/domain
 
@@ -623,8 +622,8 @@ class AsyncRawBreachClient:
                         ),
                     ),
                 )
-            if _response.status_code == 429:
-                raise TooManyRequestsError(
+            if _response.status_code == 424:
+                raise FailedDependencyError(
                     headers=dict(_response.headers),
                     body=typing.cast(
                         Error,
@@ -634,8 +633,8 @@ class AsyncRawBreachClient:
                         ),
                     ),
                 )
-            if _response.status_code == 502:
-                raise BadGatewayError(
+            if _response.status_code == 429:
+                raise TooManyRequestsError(
                     headers=dict(_response.headers),
                     body=typing.cast(
                         Error,

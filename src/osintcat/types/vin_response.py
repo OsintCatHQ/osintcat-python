@@ -2,35 +2,7 @@
 
 import typing
 
-import pydantic
-import typing_extensions
-from ..core.pydantic_utilities import IS_PYDANTIC_V2
-from ..core.serialization import FieldMetadata
-from ..core.unchecked_base_model import UncheckedBaseModel
-
-
-class VinResponse(UncheckedBaseModel):
-    """
-    The decoder's answer for the chosen `type`, typically `{"Count": n, "Message": "...", "Results": [...]}`. Decoded VINs are cached for an hour.
-    """
-
-    count: typing_extensions.Annotated[
-        typing.Optional[int], FieldMetadata(alias="Count"), pydantic.Field(alias="Count")
-    ] = None
-    message: typing_extensions.Annotated[
-        typing.Optional[str], FieldMetadata(alias="Message"), pydantic.Field(alias="Message")
-    ] = None
-    results: typing_extensions.Annotated[
-        typing.Optional[typing.List[typing.Dict[str, typing.Any]]],
-        FieldMetadata(alias="Results"),
-        pydantic.Field(alias="Results"),
-    ] = None
-
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+VinResponse = typing.Any
+"""
+The answer depends on `type`: `decode` and `wmi` return one object with the decoded fields (empty strings for fields the VIN does not carry); `batch` and the catalogue types return a list. Decoded VINs are cached for an hour.
+"""

@@ -9,10 +9,9 @@ from ..core.http_response import AsyncHttpResponse, HttpResponse
 from ..core.parse_error import ParsingError
 from ..core.request_options import RequestOptions
 from ..core.unchecked_base_model import construct_type
-from ..errors.bad_gateway_error import BadGatewayError
 from ..errors.bad_request_error import BadRequestError
+from ..errors.failed_dependency_error import FailedDependencyError
 from ..errors.forbidden_error import ForbiddenError
-from ..errors.gateway_timeout_error import GatewayTimeoutError
 from ..errors.too_many_requests_error import TooManyRequestsError
 from ..errors.unauthorized_error import UnauthorizedError
 from ..types.error import Error
@@ -34,8 +33,8 @@ class RawPhoneClient:
 
         Errors:
         - 400 `phone_*`: The number cannot be a valid phone number; `code` says why (e.g. `phone_too_short`).
-        - 502 `Upstream provider error`: The lookup could not be completed.
-        - 504 `The request timed out.`: The lookup took too long.
+        - 424 `Upstream provider error`: The lookup could not be completed.
+        - 424 `The request timed out.`: The lookup took too long.
 
         Docs: https://docs.osintcat.net/api-reference/endpoint/phone-osint
 
@@ -103,30 +102,19 @@ class RawPhoneClient:
                         ),
                     ),
                 )
+            if _response.status_code == 424:
+                raise FailedDependencyError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        Error,
+                        construct_type(
+                            type_=Error,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
             if _response.status_code == 429:
                 raise TooManyRequestsError(
-                    headers=dict(_response.headers),
-                    body=typing.cast(
-                        Error,
-                        construct_type(
-                            type_=Error,  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    ),
-                )
-            if _response.status_code == 502:
-                raise BadGatewayError(
-                    headers=dict(_response.headers),
-                    body=typing.cast(
-                        Error,
-                        construct_type(
-                            type_=Error,  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    ),
-                )
-            if _response.status_code == 504:
-                raise GatewayTimeoutError(
                     headers=dict(_response.headers),
                     body=typing.cast(
                         Error,
@@ -160,8 +148,8 @@ class AsyncRawPhoneClient:
 
         Errors:
         - 400 `phone_*`: The number cannot be a valid phone number; `code` says why (e.g. `phone_too_short`).
-        - 502 `Upstream provider error`: The lookup could not be completed.
-        - 504 `The request timed out.`: The lookup took too long.
+        - 424 `Upstream provider error`: The lookup could not be completed.
+        - 424 `The request timed out.`: The lookup took too long.
 
         Docs: https://docs.osintcat.net/api-reference/endpoint/phone-osint
 
@@ -229,30 +217,19 @@ class AsyncRawPhoneClient:
                         ),
                     ),
                 )
+            if _response.status_code == 424:
+                raise FailedDependencyError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        Error,
+                        construct_type(
+                            type_=Error,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
             if _response.status_code == 429:
                 raise TooManyRequestsError(
-                    headers=dict(_response.headers),
-                    body=typing.cast(
-                        Error,
-                        construct_type(
-                            type_=Error,  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    ),
-                )
-            if _response.status_code == 502:
-                raise BadGatewayError(
-                    headers=dict(_response.headers),
-                    body=typing.cast(
-                        Error,
-                        construct_type(
-                            type_=Error,  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    ),
-                )
-            if _response.status_code == 504:
-                raise GatewayTimeoutError(
                     headers=dict(_response.headers),
                     body=typing.cast(
                         Error,
